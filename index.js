@@ -48,7 +48,7 @@ app.get('/produtos/:id', (req, res) => {
     if (error) {
       res.status(500).send('Erro ao obter produto.');
       return;
-    }
+    } else if (results.length){}
     res.json(results[0]);
   });
 });
