@@ -25,7 +25,7 @@ app.post('/produtos', (req, res) => {
   const sql = 'INSERT INTO produtos (nome, descricao, preco) VALUES (?, ?, ?)';
   connection.query(sql, [nome, descricao, preco], (error, results) => {
     if (error) {
-      res.status(500).send('Erro ao adicionar produto.');
+      res.status(500).send('Erro ao adicionar produto.'+req);
       return;
     }
     res.status(201).send('Produto adicionado com sucesso.');
@@ -48,7 +48,10 @@ app.get('/produtos/:id', (req, res) => {
     if (error) {
       res.status(500).send('Erro ao obter produto.');
       return;
-    } else if (results.length){}
+    } else if (results.length==0){
+      res.status(404).send('Erro, id inválido');
+      return;
+    }
     res.json(results[0]);
   });
 });
@@ -62,7 +65,7 @@ app.put('/produtos/:id', (req, res) => {
       res.status(500).send('Erro ao atualizar produto.');
       return;
     }
-    res.send('Produto atualizado com sucesso.');
+    res.status(200).send('Produto atualizado com sucesso.');
   });
 });
 
@@ -73,7 +76,7 @@ app.delete('/produtos/:id', (req, res) => {
       res.status(500).send('Erro ao deletar produto.');
       return;
     }
-    res.send('Produto deletado com sucesso.');
+    res.status(200).send('Produto deletado com sucesso.');
   });
 });
 
